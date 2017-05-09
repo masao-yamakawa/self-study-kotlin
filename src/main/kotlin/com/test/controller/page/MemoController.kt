@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import sun.security.x509.OIDMap.addAttribute
 import java.util.ArrayList
 import com.test.model.Memo
+import com.test.service.MemoService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RequestAttribute
 
 
@@ -18,29 +20,35 @@ import org.springframework.web.bind.annotation.RequestAttribute
 @Controller
 @RequestMapping ("memo")
 class MemoController {
+    var memoService: MemoService
+/*
+    get() {
+        return this.memoService
+    }
+    set(value) {
+        this.memoService = value
+    }
+*/
+
+    @Autowired
+    constructor(memoService: MemoService){
+        this.memoService = memoService
+    }
 
     @RequestMapping ("")
     fun get(model: Model) : String {
 /*
-        List<Map<String, Object>> items = new ArrayList<>();
-        Map<String, Object> item = new HashMap<>();
-        item.put("memo", "Empty Memo");
-        item.put("author", "Empty Author");
-        items.add(item);
+        List<Memo> items = new ArrayList<>();
+        items.add(getMemoService().join("Join Memo", "Join Author"));
 
         model.addAttribute("items", items);
         return "memo";
 */
 
-        val items: MutableList<Map<String, Any>> = mutableListOf()
-        var item: MutableMap<String, Any> = mutableMapOf()
+        val items: MutableList<Memo> = mutableListOf()
+        items.add(memoService.join("empty memo", "empty author"))
 
-        item.put("memo", "Empty Memo")
-        item.put("author", "Empty Author")
-
-        items.add(item)
         model.addAttribute("items", items)
-
         return "memo"
     }
 
@@ -53,10 +61,7 @@ class MemoController {
         model.addAttribute("items", items);
         return "memo";
 */
-        val items = ArrayList<Memo>()
-        items.add(item)
-
-        model.addAttribute("items", items)
+        model.addAttribute("items", listOf(item))
         return "memo"
     }
 }
