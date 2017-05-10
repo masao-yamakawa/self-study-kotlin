@@ -17,8 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 class MemoControllerSpek : Spek ({
 
     // beforeSpec的なイメージ
-//    val service = MockMvcBuilders.standaloneSetup(MemoService()).build()
-    val mvc = MockMvcBuilders.standaloneSetup(MemoController()).build()
+    val mvc = MockMvcBuilders.standaloneSetup(MemoController(MemoService())).build()
 
     describe("/memoにGETでアクセスした時") {
         val result = mvc.perform(MockMvcRequestBuilders.get("/memo/"))
@@ -121,5 +120,4 @@ class MemoControllerSpek : Spek ({
             }
         }
     }
-
 })
