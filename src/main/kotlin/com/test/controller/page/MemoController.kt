@@ -16,24 +16,12 @@ import org.springframework.web.bind.annotation.*
  */
 @Controller
 @RequestMapping ("memo")
-class MemoController {
-//    var memoService: MemoService
-
-/*
-    get() {
-        return this.memoService
-    }
-    set(value) {
-        this.memoService = value
-    }
-*/
+class MemoController(val memoService : MemoService) {
 
 //    @Autowired
 //    constructor(memoService: MemoService){
 //        this.memoService = memoService
 //    }
-
-//    constructor()
 
     @RequestMapping ("")
     fun get(model: Model) : String {
@@ -46,12 +34,7 @@ class MemoController {
 */
 
         val items: MutableList<Memo> = mutableListOf()
-//        items.add(memoService.join("empty memo", "empty author"))
-        var item: Memo = Memo()
-        item.memo = "empty memo"
-        item.author = "empty author"
-
-        items.add(item)
+        items.add(memoService.join("empty memo", "empty author"))
 
         model.addAttribute("items", items)
         return "memo"
