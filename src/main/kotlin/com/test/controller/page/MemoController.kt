@@ -54,11 +54,7 @@ class MemoController(val memoService : MemoService) {
         model.addAttribute("items", items);
         return "memo";
         */
-
-        var item = Memo()
-        item.memo = memo
-        item.author = author
-        model.addAttribute("items", listOf(item))
+        model.addAttribute("items", listOf(memoService.join(memo, author)))
         return "memo"
     }
 
